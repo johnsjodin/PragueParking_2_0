@@ -1,0 +1,15 @@
+{
+  "NumberOfSpots": 100,
+  "SpotSize": 1,
+  "FreeMinutes": 10,
+  "VehicleTypes": {
+    "Car": {
+      "VehicleSize": 1,
+      "PricePerHour": 20
+    },
+    "Motorcycle": {
+      "VehicleSize": 0.5,
+      "PricePerHour": 10
+    }
+  }
+}

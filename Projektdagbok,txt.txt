@@ -1,0 +1,51 @@
+Projektdagbok för Prague Parking v.2.0
+
+2025-07-13
+	Logic klar. Fem klasser: Vehicle, Car och Mc, samt ParkingSpot och ParkingGarage
+	med lite metoder som verkade vettiga. Kommer säkert behöva gå in och ändra senare.
+	Började även göra main-fönstret med MainForm, lade till knappar, menyrad samt en (tom) datagrid.
+	Första problemet är att skapa ett nytt garage på 100 platser och skriva det till en .json-fil...
+	
+	Stötte på problem med projektreferenserna när jag försökte kalla på en metod i Logic från UI.
+	Nu är det såhär: UI -> Logic -> Data. Känner att det kommer bli rörigt att hålla reda på vad som
+	är vilket projekts ansvar. Tror inte kursmaterialet gick igenom projektreferenser alls.
+
+	Gjorde en generisk FileHandler-klass i Data-projektet som läser/skriver till/från .json-filer.
+	Ska ha en garage.json och en config.json och de får ligga i "jsonfiles"-mappen under UI-projektet...
+	garage.json skrivs som den ska, nu följer att läsa och ladda den också. Samt samma sak med config.json.
+
+2025-07-15
+	Lade till klasserna GarageManager och ConfigManager i Logic, de pratar med FileHandler i Data och har
+	hand om laddning och sparning av garage.json och config.json. Kommer även bli lättare att göra ett
+	konfigurations-UI på det sättet.
+
+	Gick tillbaks och ändrade lite bland annat i konstruktorn för ParkingGarage, samt gjorde en Reset-metod
+	som kallas av en ResetGarage-metod i GarageManager, för att dela upp ansvarsbördan. Kan ju lika gärna
+	använda snygg kod från början.
+
+	Fortsätter med config-fönstret och inser att instruktionerna kräver mer än vad jag trodde. Jag måste
+	kunna lägga till fordonstyper, samt lägga till värden för storlek och pris/tim för den nya fordonstypen.
+	Jag får sätta mig in lite mer i hur Dictionaries funkar, tror det ska gå att använda det.
+
+2025-07-16	
+	Är väldigt ovan med winforms, men nu ska det funka enligt instruktionerna: ändra antal p-platser och
+	gratisminuter, samt storlek på fordonen (gjorde en beräkning spotsize / vehiclesize för att snygga
+	till och förenkla i UI:n) och pris per timme. SAMT lägga till nya fordon med de värdena.
+
+	Kartan över garaget är implementerad och funktionell.
+
+	Tar itu med funktionerna för att hantera fordonen. Börjar med Park Vehicle-knappen. Lägger till metoder
+	i både ParkingGarage och ParkingSpot. Fick ett error i LoadParkingMap när jag sparade ett fordon i
+	garage.json och startade om programmet. Det hade att göra med hur GarageManager sparade datan. Jag
+	sparade hela CurrentGarage-objektet till fil, men LoadOrCreateGarage försökte läsa in en List<ParkingSpot>,
+	inte ett helt ParkingGarage. När jag istället sparade bara CurrentGarage.ParkingSpots, alltså listan som
+	faktiskt förväntas vid deserialisering, så löste det sig.
+
+	ParkVehicleForm, ReturnVehicleForm, ReceiptForm implementerat. Gick även tillbaks i ParkingGarage för att
+	fylla på med de metoder som används: ParkVehicle, ReturnVehicle, MoveVehicle, FindVehicle. Även metoder i
+	ParkingSpot: CanFitVehicle och HasRegistration. Gjorde även en ValidateRegistration-klass för att enklare
+	kunna validera registreringsnumret då användaren kommer skriva in det så ofta.
+
+2025-07-17
+	Gjorde klart det sista, FindVehicleForm och MoveVehicleForm, samt funktioner för menyknapparna. Refaktorerade
+	koden på några ställen och lade till förtydligande kommentarer. 
